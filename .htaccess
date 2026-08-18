@@ -1,0 +1,7 @@
+# ═══ نشر Hostinger ═══
+# يعيد توجيه كل الطلبات لمجلد public/ الخاص بلارافيل
+# (يُستخدم عند رفع المشروع كاملًا داخل مجلد الـsubdomain مباشرة)
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
