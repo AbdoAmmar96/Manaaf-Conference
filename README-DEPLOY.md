@@ -7,7 +7,7 @@
 ## ١) إنشاء الـSubdomain
 
 1. من hPanel → **Websites** → manafi.sa → **Subdomains**
-2. أنشئ subdomain باسم: `event` → سيصبح الرابط `event.manafi.sa`
+2. أنشئ subdomain باسم: `conference` → سيصبح الرابط `conference.manafi.sa`
 3. سيُنشأ مجلد خاص بالـsubdomain — احفظ مساره (غالبًا داخل `domains/manafi.sa/public_html/event`)
 
 ## ٢) قاعدة البيانات
@@ -33,7 +33,7 @@
 1. انسخ `.env.example` إلى ملف جديد باسم `.env`
 2. عدّل فيه:
    - `DB_DATABASE` / `DB_USERNAME` / `DB_PASSWORD` — من الخطوة ٢
-   - `APP_URL=https://event.manafi.sa`
+   - `APP_URL=https://conference.manafi.sa`
 
 ## ٦) أوامر التشغيل (مرة واحدة)
 
@@ -59,7 +59,7 @@ hPanel يفعّل شهادة SSL مجانية تلقائيًا للـsubdomain �
 
 ## حسابات الدخول الافتراضية
 
-الرابط: `https://event.manafi.sa/admin/login`
+الرابط: `https://conference.manafi.sa/admin/login`
 
 | الدور | البريد | كلمة المرور |
 |---|---|---|
