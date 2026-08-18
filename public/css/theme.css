@@ -445,3 +445,122 @@ details.add-box .box-body { padding: 1.3rem; }
   display: inline; color: var(--lime); font-weight: 700; opacity: 1;
 }
 .site-footer .credit-link:hover { text-decoration: underline; }
+
+/* ============ شاشات لوحة التحكم الجديدة ============ */
+.page-hint {
+  background: var(--sand); border: 1px solid var(--line); border-radius: 12px;
+  padding: .9rem 1.1rem; font-size: .85rem; color: var(--muted);
+  line-height: 2; margin-bottom: 1.3rem;
+}
+.page-hint a { color: var(--green); font-weight: 700; }
+.section-sub { color: var(--green-heading); font-size: 1.05rem; margin: 1.8rem 0 1rem; }
+
+/* صندوق قابل للطي (إضافة / تعديل) */
+.panel-box, .lead-edit, .row-edit {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  margin-bottom: 1.2rem; overflow: hidden;
+}
+.panel-box > summary, .lead-edit > summary {
+  cursor: pointer; padding: .85rem 1.1rem; font-weight: 700; font-size: .88rem;
+  color: var(--green-heading); background: var(--sand); list-style: none;
+}
+.panel-box > summary::-webkit-details-marker,
+.lead-edit > summary::-webkit-details-marker,
+.row-edit > summary::-webkit-details-marker { display: none; }
+.panel-box > summary::after, .lead-edit > summary::after { content: " ▾"; opacity: .6; }
+.panel-box[open] > summary::after, .lead-edit[open] > summary::after { content: " ▴"; }
+.box-body { padding: 1.2rem 1.1rem; }
+.lead-edit { margin: 1rem 0 0; border-radius: 12px; }
+.row-edit { border: 0; background: transparent; margin: 0; overflow: visible; }
+.row-edit > summary { list-style: none; cursor: pointer; display: inline-block; }
+.row-edit .box-body { background: var(--sand); border-radius: 12px; margin-top: .6rem; min-width: 260px; }
+
+/* بطاقة اهتمام / رسالة */
+.lead-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.2rem 1.3rem; margin-bottom: 1rem;
+}
+.lead-head { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; align-items: flex-start; }
+.lead-head-side { text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: .3rem; }
+.lead-meta { display: block; font-size: .76rem; color: var(--muted); margin-top: .2rem; }
+.lead-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin: .8rem 0; }
+.tag {
+  background: rgba(6,120,44,.08); color: var(--green); border: 1px solid rgba(6,120,44,.18);
+  border-radius: 999px; padding: .2rem .7rem; font-size: .76rem; font-weight: 600;
+}
+.lead-facts {
+  display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; font-size: .8rem;
+  color: var(--muted); padding-top: .8rem; border-top: 1px solid var(--line);
+}
+.lead-facts b { color: var(--ink); font-weight: 600; }
+.lead-notes {
+  background: var(--sand); border-radius: 10px; padding: .7rem .9rem;
+  font-size: .84rem; line-height: 1.9; margin-top: .8rem; white-space: pre-line;
+}
+.msg-subject { font-weight: 700; font-size: .9rem; margin: .7rem 0 .3rem; color: var(--ink); }
+.msg-body {
+  font-size: .85rem; line-height: 2; color: var(--muted);
+  white-space: pre-line; margin-bottom: .9rem;
+}
+
+/* سجل المتابعة */
+.follow-item {
+  border-inline-start: 3px solid var(--lime); background: var(--sand);
+  border-radius: 0 10px 10px 0; padding: .65rem .9rem; margin-bottom: .6rem;
+}
+.follow-head { display: flex; justify-content: space-between; gap: .8rem; font-size: .76rem; margin-bottom: .25rem; }
+.follow-head b { color: var(--green-heading); }
+.follow-head span { color: var(--muted); }
+.follow-item p { font-size: .85rem; line-height: 1.9; }
+.follow-empty { font-size: .84rem; color: var(--muted); padding: .5rem 0 1rem; }
+.inline-form { border-top: 1px solid var(--line); margin-top: 1rem; padding-top: 1rem; }
+
+/* المناطق */
+.zone-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 1.1rem; }
+.zone-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.2rem; text-align: center;
+}
+.zone-qr { background: var(--sand); border-radius: 12px; padding: .8rem; margin-bottom: .9rem; }
+.zone-qr img { width: 100%; max-width: 150px; height: auto; }
+.zone-card h3 { color: var(--green-heading); font-size: .97rem; margin-bottom: .35rem; }
+.zone-desc { font-size: .8rem; color: var(--muted); line-height: 1.9; min-height: 2.6em; }
+.zone-facts { display: flex; justify-content: center; align-items: center; gap: .7rem; font-size: .8rem; color: var(--muted); margin: .8rem 0; }
+.zone-links { display: flex; gap: .5rem; justify-content: center; }
+
+/* التقارير */
+.export-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-bottom: 1.6rem; }
+.report-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.1rem; }
+.report-box {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 1.1rem 1.2rem;
+}
+.report-box h3 { color: var(--green-heading); font-size: .93rem; margin-bottom: .7rem; }
+table.data.mini { width: 100%; font-size: .84rem; }
+table.data.mini td { padding: .45rem .3rem; border-bottom: 1px solid var(--line); }
+table.data.mini td.num { text-align: left; font-weight: 700; width: 3.5rem; }
+.bar-cell { width: 40%; }
+.bar { display: block; height: 7px; border-radius: 99px; background: var(--lime); min-width: 2px; }
+
+/* الصلاحيات */
+.role-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.6rem; }
+.role-card {
+  background: #fff; border: 1px solid var(--line); border-inline-start: 4px solid var(--green);
+  border-radius: var(--radius); padding: 1.1rem 1.2rem;
+}
+.role-card h3 { color: var(--green-heading); font-size: .97rem; }
+.role-count { font-size: .74rem; color: var(--brand-orange); font-weight: 700; }
+.role-card p { font-size: .83rem; color: var(--muted); line-height: 1.95; margin-top: .5rem; }
+table.perms .perm-col { text-align: center; width: 6.5rem; }
+.perm-desc { font-size: .77rem; color: var(--muted); margin-top: .2rem; line-height: 1.8; }
+.perm-yes { color: var(--green); font-weight: 800; font-size: 1.05rem; }
+.perm-no { color: var(--line); font-weight: 800; }
+
+/* عناصر مساعدة */
+.switch { display: flex; align-items: center; gap: .55rem; font-size: .86rem; font-weight: 600; cursor: pointer; }
+.switch input { width: 17px; height: 17px; accent-color: var(--green); }
+.field-hint { display: block; font-size: .74rem; color: var(--muted); margin-top: .25rem; }
+.btn-outline-green {
+  background: transparent; border: 1.5px solid var(--green); color: var(--green);
+}
+.btn-outline-green:hover { background: var(--green); color: #fff; }

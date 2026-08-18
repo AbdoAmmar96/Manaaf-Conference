@@ -33,6 +33,15 @@
             <div class="field"><label>رقم الجوال *</label><input name="mobile" value="{{ old('mobile') }}" required inputmode="tel"></div>
             <div class="field"><label>البريد الإلكتروني</label><input type="email" name="email" value="{{ old('email') }}"></div>
             <div class="field"><label>الموضوع</label><input name="subject" value="{{ old('subject') }}"></div>
+            <div class="field full">
+              <label>المنطقة التي يخصّها استفسارك</label>
+              <select name="zone_id">
+                <option value="">— استفسار عام (غير مرتبط بمنطقة) —</option>
+                @foreach($zones as $zone)
+                  <option value="{{ $zone->id }}" @selected(old('zone_id') == $zone->id)>{{ $zone->name }}</option>
+                @endforeach
+              </select>
+            </div>
             <div class="field full"><label>الرسالة *</label><textarea name="body" rows="5" required>{{ old('body') }}</textarea></div>
             <div class="full"><button type="submit" class="btn btn-green btn-block">إرسال الرسالة</button></div>
           </div>

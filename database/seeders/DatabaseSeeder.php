@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // ── إعدادات الحفل ────────────────────────────────────────────────
-        Setting::set('event_name', 'حفل افتتاح مدينة منافع الصناعية المتكاملة');
+        Setting::set('event_name', 'حفل افتتاح مدينة منافع الحرفية المتكاملة');
         Setting::set('event_date', '2026-10-15 19:00:00');
         Setting::set('event_venue', 'مدينة منافع — الطائف، المملكة العربية السعودية');
         Setting::set('investor_qr_token', Str::random(32));

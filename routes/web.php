@@ -5,6 +5,10 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GuestController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ReportController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ZoneController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
@@ -78,18 +82,34 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::post('/checkin/confirm', [CheckinController::class, 'confirm'])->name('checkin.confirm');
     });
 
-    Route::get('/messages', [MessageController::class, 'index'])
-        ->middleware('role:admin,reception,sales')->name('messages.index');
+    /* الرسائل ومتابعتها — الثلاثة أدوار */
+    Route::middleware('role:admin,reception,sales')->group(function () {
+        Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+        Route::patch('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
+        Route::post('/messages/{message}/comments', [MessageController::class, 'comment'])->name('messages.comment');
 
-    Route::get('/leads', [LeadController::class, 'index'])
-        ->middleware('role:admin,sales')->name('leads.index');
+        /* اهتمامات العملاء — الاستقبال أيضًا يسجّل ويكتب الملاحظات */
+        Route::get('/leads', [LeadController::class, 'index'])->name('leads.index');
+        Route::post('/leads', [LeadController::class, 'store'])->name('leads.store');
+        Route::patch('/leads/{lead}', [LeadController::class, 'update'])->name('leads.update');
+    });
 
-    Route::view('/zones', 'admin.placeholder', ['title' => 'المناطق والماكيتات'])
-        ->middleware('role:admin')->name('zones.index');
+    /* الإعدادات والتقارير — المدير فقط */
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/zones', [ZoneController::class, 'index'])->name('zones.index');
+        Route::post('/zones', [ZoneController::class, 'store'])->name('zones.store');
+        Route::patch('/zones/{zone}', [ZoneController::class, 'update'])->name('zones.update');
+        Route::get('/zones/{zone}/qr.png', [ZoneController::class, 'qrImage'])->name('zones.qr');
 
-    Route::view('/reports', 'admin.placeholder', ['title' => 'التقارير'])
-        ->middleware('role:admin')->name('reports');
+        Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+        Route::get('/reports/guests.csv', [ReportController::class, 'exportGuests'])->name('reports.guests');
+        Route::get('/reports/leads.csv', [ReportController::class, 'exportLeads'])->name('reports.leads');
+        Route::get('/reports/messages.csv', [ReportController::class, 'exportMessages'])->name('reports.messages');
 
-    Route::view('/users', 'admin.placeholder', ['title' => 'المستخدمون والصلاحيات'])
-        ->middleware('role:admin')->name('users.index');
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
+        Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
+    });
 });

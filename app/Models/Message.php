@@ -12,7 +12,7 @@ class Message extends Model
 {
     protected $fillable = [
         'name', 'email', 'mobile', 'subject', 'body',
-        'category', 'status', 'source', 'assigned_to',
+        'category', 'status', 'source', 'zone_id', 'assigned_to',
     ];
 
     protected function casts(): array
@@ -31,5 +31,10 @@ class Message extends Model
     public function assignee(): BelongsTo
     {
         return $this->belongsTo(User::class, 'assigned_to');
+    }
+
+    public function zone(): BelongsTo
+    {
+        return $this->belongsTo(Zone::class);
     }
 }

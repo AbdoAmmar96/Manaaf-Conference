@@ -11,7 +11,7 @@
   <div class="stat"><b>{{ $stats['attended'] }}</b><span>حضروا فعليًا</span></div>
   <div class="stat"><b>{{ $stats['awaited'] }}</b><span>لم يصلوا بعد</span></div>
   <div class="stat accent"><b>{{ $stats['vip'] }}</b><span>ضيوف VIP</span></div>
-  <div class="stat accent"><b>{{ $stats['leads'] }}</b><span>Leads مسجلة</span></div>
+  <div class="stat accent"><b>{{ $stats['leads'] }}</b><span>اهتمامات مسجلة</span></div>
   <div class="stat"><b>{{ $stats['messages_new'] }}</b><span>رسائل جديدة</span></div>
 </div>
 

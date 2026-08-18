@@ -30,16 +30,17 @@
       <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">الرئيسية</a>
       @if($user->hasRole(\App\Enums\UserRole::Admin, \App\Enums\UserRole::Reception))
         <a href="{{ route('admin.guests.index') }}" class="{{ request()->routeIs('admin.guests.*') ? 'active' : '' }}">الضيوف</a>
-        <a href="{{ route('admin.checkin') }}" class="{{ request()->routeIs('admin.checkin') ? 'active' : '' }}">Check-in</a>
+        <a href="{{ route('admin.checkin') }}" class="{{ request()->routeIs('admin.checkin') ? 'active' : '' }}">تسجيل دخول الضيوف</a>
       @endif
       <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">الرسائل</a>
-      @if($user->hasRole(\App\Enums\UserRole::Admin, \App\Enums\UserRole::Sales))
-        <a href="{{ route('admin.leads.index') }}" class="{{ request()->routeIs('admin.leads.*') ? 'active' : '' }}">Leads</a>
+      @if($user->hasRole(\App\Enums\UserRole::Admin, \App\Enums\UserRole::Sales, \App\Enums\UserRole::Reception))
+        <a href="{{ route('admin.leads.index') }}" class="{{ request()->routeIs('admin.leads.*') ? 'active' : '' }}">اهتمامات العملاء</a>
       @endif
       @if($user->isAdmin())
         <a href="{{ route('admin.zones.index') }}" class="{{ request()->routeIs('admin.zones.*') ? 'active' : '' }}">المناطق</a>
         <a href="{{ route('admin.reports') }}" class="{{ request()->routeIs('admin.reports') ? 'active' : '' }}">التقارير</a>
         <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">المستخدمون</a>
+        <a href="{{ route('admin.permissions') }}" class="{{ request()->routeIs('admin.permissions') ? 'active' : '' }}">الصلاحيات</a>
       @endif
     </nav>
 

@@ -179,6 +179,7 @@ class PublicController extends Controller
     public function contact(): View
     {
         return view('public.contact', [
+            'zones' => Zone::where('active', true)->orderBy('name')->get(),
             'eventVenue' => Setting::get('event_venue'),
             'contact' => [
                 'phone' => Setting::get('contact_phone'),
@@ -198,6 +199,7 @@ class PublicController extends Controller
             'mobile' => ['required', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:190'],
             'subject' => ['nullable', 'string', 'max:190'],
+            'zone_id' => ['nullable', Rule::exists('zones', 'id')->where('active', true)],
             'body' => ['required', 'string', 'max:3000'],
         ]);
 
