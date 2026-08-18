@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\AttendanceStatus;
 use App\Enums\GuestType;
-use App\Enums\LeadInterest;
 use App\Enums\LeadScore;
 use App\Enums\MessageStatus;
 use App\Enums\RsvpStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
+use App\Models\Interest;
 use App\Models\Lead;
 use App\Models\Message;
 use App\Models\Zone;
@@ -34,9 +34,9 @@ class ReportController extends Controller
                 'label' => $t->labelAr(),
                 'count' => Guest::where('guest_type', $t)->count(),
             ]),
-            'byInterest' => collect(LeadInterest::cases())->map(fn ($i) => [
-                'label' => $i->labelAr(),
-                'count' => Lead::whereJsonContains('interests', $i->value)->count(),
+            'byInterest' => Interest::orderBy('sort')->get()->map(fn ($i) => [
+                'label' => $i->name,
+                'count' => Lead::whereJsonContains('interests', $i->slug)->count(),
             ])->sortByDesc('count')->values(),
             'byScore' => collect(LeadScore::cases())->map(fn ($s) => [
                 'label' => $s->labelAr(),
@@ -80,7 +80,7 @@ class ReportController extends Controller
             $l->displayName(),
             $l->guest?->mobile ?? $l->walk_in_mobile,
             $l->guest?->organization,
-            collect($l->interests)->map(fn ($i) => LeadInterest::from($i)->labelAr())->implode('، '),
+            Interest::labelsFor($l->interests)->implode('، '),
             $l->score->labelAr(),
             $l->source->labelAr(),
             $l->zone?->name,

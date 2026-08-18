@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\LeadInterest;
 use App\Enums\LeadScore;
 use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
+use App\Models\Interest;
 use App\Models\Lead;
 use App\Models\User;
 use App\Models\Zone;
@@ -30,7 +30,7 @@ class LeadController extends Controller
 
         return view('admin.leads.index', [
             'leads' => $leads,
-            'interests' => LeadInterest::cases(),
+            'interests' => Interest::active()->orderBy('sort')->get(),
             'scores' => LeadScore::cases(),
             'zones' => Zone::orderBy('name')->get(),
             'salesTeam' => User::whereIn('role', [UserRole::Sales, UserRole::Admin])
@@ -53,7 +53,7 @@ class LeadController extends Controller
             'walk_in_name' => ['required_without:guest_id', 'nullable', 'string', 'max:190'],
             'walk_in_mobile' => ['required_without:guest_id', 'nullable', 'string', 'max:30'],
             'interests' => ['required', 'array', 'min:1'],
-            'interests.*' => [Rule::enum(LeadInterest::class)],
+            'interests.*' => [Rule::exists('interests', 'slug')],
             'score' => ['required', Rule::enum(LeadScore::class)],
             'notes' => ['nullable', 'string', 'max:2000'],
             'assigned_to' => ['nullable', 'exists:users,id'],
@@ -77,7 +77,7 @@ class LeadController extends Controller
     {
         $data = $request->validate([
             'interests' => ['required', 'array', 'min:1'],
-            'interests.*' => [Rule::enum(LeadInterest::class)],
+            'interests.*' => [Rule::exists('interests', 'slug')],
             'score' => ['required', Rule::enum(LeadScore::class)],
             'notes' => ['nullable', 'string', 'max:2000'],
             'assigned_to' => ['nullable', 'exists:users,id'],

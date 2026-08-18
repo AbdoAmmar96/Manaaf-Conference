@@ -27,4 +27,9 @@ class Zone extends Model
     {
         return $this->hasMany(Lead::class);
     }
+
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class);
+    }
 }

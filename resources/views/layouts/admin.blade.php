@@ -38,6 +38,8 @@
       @endif
       @if($user->isAdmin())
         <a href="{{ route('admin.zones.index') }}" class="{{ request()->routeIs('admin.zones.*') ? 'active' : '' }}">المناطق</a>
+        <a href="{{ route('admin.projects.index') }}" class="{{ request()->routeIs('admin.projects.*') ? 'active' : '' }}">المشاريع</a>
+        <a href="{{ route('admin.interests.index') }}" class="{{ request()->routeIs('admin.interests.*') ? 'active' : '' }}">مجالات الاهتمام</a>
         <a href="{{ route('admin.reports') }}" class="{{ request()->routeIs('admin.reports') ? 'active' : '' }}">التقارير</a>
         <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">المستخدمون</a>
         <a href="{{ route('admin.permissions') }}" class="{{ request()->routeIs('admin.permissions') ? 'active' : '' }}">الصلاحيات</a>

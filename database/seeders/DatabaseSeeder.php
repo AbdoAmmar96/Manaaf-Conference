@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Guest;
+use App\Enums\LeadInterest;
+use App\Models\Interest;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\Zone;
@@ -46,6 +48,16 @@ class DatabaseSeeder extends Seeder
         Setting::set('contact_email', '');
         Setting::set('contact_hours', 'الأحد – الخميس · ٩:٠٠ صباحًا – ٥:٠٠ مساءً');
         Setting::set('contact_map_url', '');
+
+        // ── مجالات الاهتمام ──────────────────────────────────────────────
+        // الـslug يطابق قيم enum القديم حرفيًا، فبيانات leads.interests
+        // المخزّنة سابقًا تبقى صالحة دون أي ترحيل
+        foreach (LeadInterest::cases() as $i => $case) {
+            Interest::updateOrCreate(
+                ['slug' => $case->value],
+                ['name' => $case->labelAr(), 'sort' => $i, 'active' => true]
+            );
+        }
 
         // ── مناطق المعرض / الماكيتات (بأسماء القطاعات الستة) ────────────
         $zones = [

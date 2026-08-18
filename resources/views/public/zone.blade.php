@@ -30,9 +30,9 @@
         <div class="check-grid">
           @foreach($interests as $interest)
             <label>
-              <input type="checkbox" name="interests[]" value="{{ $interest->value }}"
-                     @checked(is_array(old('interests')) && in_array($interest->value, old('interests')))>
-              {{ $interest->labelAr() }}
+              <input type="checkbox" name="interests[]" value="{{ $interest->slug }}"
+                     @checked(is_array(old('interests')) && in_array($interest->slug, old('interests')))>
+              {{ $interest->name }}
             </label>
           @endforeach
         </div>

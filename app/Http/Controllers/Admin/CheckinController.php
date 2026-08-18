@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
@@ -42,6 +43,10 @@ class CheckinController extends Controller
     {
         $guest = Guest::findOrFail($request->integer('guest_id'));
 
+        if (! $guest->isApproved()) {
+            return response()->json(['status' => 'not_approved', 'guest' => $this->card($guest)]);
+        }
+
         if ($guest->attendance_status === AttendanceStatus::Cancelled) {
             return response()->json(['status' => 'cancelled', 'guest' => $this->card($guest)]);
         }
@@ -71,7 +76,7 @@ class CheckinController extends Controller
     {
         $guest = Guest::where('qr_token', $token)->firstOrFail();
 
-        if ($guest->attendance_status !== AttendanceStatus::Cancelled && ! $guest->isCheckedIn()) {
+        if ($guest->isApproved() && $guest->attendance_status !== AttendanceStatus::Cancelled && ! $guest->isCheckedIn()) {
             $guest->update([
                 'attendance_status' => AttendanceStatus::Attended,
                 'checked_in_at' => now(),
@@ -95,6 +100,8 @@ class CheckinController extends Controller
             'type' => $g->guest_type->value,
             'type_label' => $g->guest_type->labelAr(),
             'rsvp_label' => $g->rsvp_status->labelAr(),
+            'approval' => $g->approval_status->value,
+            'approval_label' => $g->approval_status->labelAr(),
             'attendance' => $g->attendance_status->value,
             'attendance_label' => $g->attendance_status->labelAr(),
             'checked_in_at' => $g->checked_in_at?->format('h:i A'),

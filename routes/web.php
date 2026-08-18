@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GuestController;
 use App\Http\Controllers\Admin\LeadController;
 use App\Http\Controllers\Admin\MessageController;
+use App\Http\Controllers\Admin\InterestController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\ZoneController;
@@ -37,6 +39,9 @@ Route::post('/investor-request', [PublicController::class, 'investorRequestStore
 
 Route::get('/contact', [PublicController::class, 'contact'])->name('contact');
 Route::post('/contact', [PublicController::class, 'contactStore'])->name('contact.store');
+
+Route::get('/zones', [PublicController::class, 'zones'])->name('zones');
+Route::get('/zones/{slug}/qr.png', [PublicController::class, 'zoneQrImage'])->name('zone.qr');
 
 Route::get('/zone/{slug}', [PublicController::class, 'zone'])->name('zone');
 Route::post('/zone/{slug}', [PublicController::class, 'zoneStore'])->name('zone.store');
@@ -76,6 +81,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::middleware('role:admin,reception')->group(function () {
         Route::get('/guests', [GuestController::class, 'index'])->name('guests.index');
         Route::post('/guests', [GuestController::class, 'store'])->name('guests.store');
+        Route::patch('/guests/{guest}/approve', [GuestController::class, 'approve'])->name('guests.approve');
+        Route::patch('/guests/{guest}/reject', [GuestController::class, 'reject'])->name('guests.reject');
+        Route::patch('/guests/{guest}/sent', [GuestController::class, 'markSent'])->name('guests.sent');
 
         Route::get('/checkin', [CheckinController::class, 'index'])->name('checkin');
         Route::get('/checkin/lookup', [CheckinController::class, 'lookup'])->name('checkin.lookup');
@@ -109,6 +117,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::post('/users', [UserController::class, 'store'])->name('users.store');
         Route::patch('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
+        Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
+        Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+        Route::patch('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+        Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+        Route::get('/interests', [InterestController::class, 'index'])->name('interests.index');
+        Route::post('/interests', [InterestController::class, 'store'])->name('interests.store');
+        Route::patch('/interests/{interest}', [InterestController::class, 'update'])->name('interests.update');
+        Route::delete('/interests/{interest}', [InterestController::class, 'destroy'])->name('interests.destroy');
 
         Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions');
     });

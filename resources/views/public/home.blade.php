@@ -23,7 +23,7 @@
     @endif
 
     <div class="actions fade-up d3">
-      <a href="{{ route('register') }}" class="btn btn-lime">سجّل حضورك</a>
+      <a href="{{ route('register') }}" class="btn btn-lime">اطلب دعوتك</a>
       <a href="{{ route('investors') }}" class="btn btn-outline">فرص المستثمرين</a>
     </div>
 

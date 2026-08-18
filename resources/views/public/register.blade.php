@@ -5,16 +5,23 @@
 @section('content')
 <section class="page-hero">
   <div class="container">
-    <h1>تسجيل الحضور</h1>
-    <p>سجّل بياناتك وستحصل فورًا على بطاقة دخول بكود QR خاص بك تُقدّمها عند البوابة</p>
+    <h1>طلب حضور الحفل</h1>
+    <p>قدّم طلب حضورك، وبعد اعتماده من فريق التنظيم تصلك بطاقة الدعوة بكود QR على الواتساب أو البريد</p>
   </div>
 </section>
 
 <div class="form-page">
   <div class="panel wide fade-up">
+    @if(session('success'))
+      <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
     @if($errors->any())
       <div class="alert alert-error">{{ $errors->first() }}</div>
     @endif
+    <p class="form-note">
+      الحضور بالدعوة. بعد إرسال الطلب يراجعه فريق التنظيم، وعند اعتماده تصلك
+      بطاقة الدعوة الخاصة بك — احتفظ بها وقدّمها عند البوابة.
+    </p>
     <form method="POST" action="{{ route('register.store') }}">
       @csrf
       <div class="form-grid">
@@ -34,7 +41,7 @@
           </select>
         </div>
         <div class="full" style="margin-top:.6rem">
-          <button type="submit" class="btn btn-green btn-block">سجّل واحصل على بطاقة الدخول</button>
+          <button type="submit" class="btn btn-green btn-block">إرسال طلب الحضور</button>
         </div>
       </div>
     </form>

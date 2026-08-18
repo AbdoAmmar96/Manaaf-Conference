@@ -31,7 +31,7 @@
           <select name="interest">
             <option value="">— اختر المجال —</option>
             @foreach($interests as $interest)
-              <option value="{{ $interest->value }}" @selected(old('interest') == $interest->value)>{{ $interest->labelAr() }}</option>
+              <option value="{{ $interest->slug }}" @selected(old('interest') == $interest->slug)>{{ $interest->name }}</option>
             @endforeach
           </select>
         </div>

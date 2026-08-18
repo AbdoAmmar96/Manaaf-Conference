@@ -38,8 +38,8 @@
         <label>الاهتمامات * (اختر واحدًا أو أكثر)</label>
         <div class="check-grid">
           @foreach($interests as $i)
-            <label><input type="checkbox" name="interests[]" value="{{ $i->value }}"
-              @checked(in_array($i->value, old('interests', []))) > {{ $i->labelAr() }}</label>
+            <label><input type="checkbox" name="interests[]" value="{{ $i->slug }}"
+              @checked(in_array($i->slug, old('interests', []))) > {{ $i->name }}</label>
           @endforeach
         </div>
       </div>
@@ -89,7 +89,7 @@
   <select name="interest" onchange="this.form.submit()">
     <option value="">كل الاهتمامات</option>
     @foreach($interests as $i)
-      <option value="{{ $i->value }}" @selected(request('interest') === $i->value)>{{ $i->labelAr() }}</option>
+      <option value="{{ $i->slug }}" @selected(request('interest') === $i->slug)>{{ $i->name }}</option>
     @endforeach
   </select>
   <select name="zone" onchange="this.form.submit()">
@@ -128,8 +128,8 @@
     </div>
 
     <div class="lead-tags">
-      @foreach($lead->interests as $i)
-        <span class="tag">{{ \App\Enums\LeadInterest::from($i)->labelAr() }}</span>
+      @foreach(\App\Models\Interest::labelsFor($lead->interests) as $label)
+        <span class="tag">{{ $label }}</span>
       @endforeach
     </div>
 
@@ -153,8 +153,8 @@
             <label>الاهتمامات *</label>
             <div class="check-grid">
               @foreach($interests as $i)
-                <label><input type="checkbox" name="interests[]" value="{{ $i->value }}"
-                  @checked(in_array($i->value, $lead->interests ?? [])) > {{ $i->labelAr() }}</label>
+                <label><input type="checkbox" name="interests[]" value="{{ $i->slug }}"
+                  @checked(in_array($i->slug, $lead->interests ?? [])) > {{ $i->name }}</label>
               @endforeach
             </div>
           </div>

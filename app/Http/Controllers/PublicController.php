@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\LeadInterest;
+use App\Enums\ApprovalStatus;
 use App\Models\Guest;
+use App\Models\Interest;
 use App\Models\Lead;
 use App\Models\Message;
 use App\Models\Setting;
@@ -46,19 +47,23 @@ class PublicController extends Controller
 
         if (Guest::where('mobile', $data['mobile'])->exists()) {
             return back()->withInput()->withErrors([
-                'mobile' => 'هذا الرقم مسجل بالفعل. إن كنت سجلت سابقًا ولم تصلك البطاقة فتواصل معنا.',
+                'mobile' => 'يوجد طلب مسجّل بهذا الرقم بالفعل. إن لم تصلك بطاقة الدعوة بعد فتواصل معنا.',
             ]);
         }
 
-        $guest = Guest::create($data + [
-            'rsvp_status' => 'confirmed',
-            'rsvp_at' => now(),
+        /*
+         * التسجيل الذاتي صار «طلب حضور» لا حجزًا مؤكدًا: لا تُصدر بطاقة QR
+         * هنا، بل يراجع الموظف الطلب ويعتمده ثم يرسل بطاقة الدعوة بنفسه.
+         */
+        Guest::create($data + [
+            'approval_status' => ApprovalStatus::Pending,
+            'rsvp_status' => 'pending',
             'registered_via' => 'self',
         ]);
 
         return redirect()
-            ->route('guest.qr', ['token' => $guest->qr_token])
-            ->with('success', 'تم تسجيل حضورك بنجاح! احتفظ ببطاقة الدخول هذه وقدّمها عند البوابة.');
+            ->route('register')
+            ->with('success', 'تم استلام طلبكم بنجاح — سيراجعه فريق التنظيم، وعند اعتماده تصلكم بطاقة الدعوة على الواتساب أو البريد الإلكتروني.');
     }
 
     /* ─────────────── دعوة / تأكيد الحضور RSVP ─────────────── */
@@ -102,12 +107,17 @@ class PublicController extends Controller
     {
         $guest = Guest::where('qr_token', $token)->firstOrFail();
 
+        // بطاقة الدخول لا تُعرض إلا بعد اعتماد الطلب من فريق التنظيم
+        if (! $guest->isApproved()) {
+            return view('public.request-status', ['guest' => $guest]);
+        }
+
         return view('public.my-qr', ['guest' => $guest]);
     }
 
     public function qrImage(string $token): Response
     {
-        $guest = Guest::where('qr_token', $token)->firstOrFail();
+        $guest = Guest::where('qr_token', $token)->where('approval_status', ApprovalStatus::Approved)->firstOrFail();
 
         return response(Qr::png($guest->qrUrl()), 200, [
             'Content-Type' => 'image/png',
@@ -121,7 +131,7 @@ class PublicController extends Controller
     {
         return view('public.investors', [
             'zones' => Zone::where('active', true)->get(),
-            'interests' => LeadInterest::cases(),
+            'interests' => Interest::active()->orderBy('sort')->get(),
         ]);
     }
 
@@ -138,7 +148,7 @@ class PublicController extends Controller
     public function investorRequest(Request $request): View
     {
         return view('public.investor-request', [
-            'interests' => LeadInterest::cases(),
+            'interests' => Interest::active()->orderBy('sort')->get(),
             'fromQr' => $request->query('src') === 'qr',
         ]);
     }
@@ -150,13 +160,13 @@ class PublicController extends Controller
             'company' => ['nullable', 'string', 'max:190'],
             'mobile' => ['required', 'string', 'max:30'],
             'email' => ['nullable', 'email', 'max:190'],
-            'interest' => ['nullable', Rule::in(array_column(LeadInterest::cases(), 'value'))],
+            'interest' => ['nullable', Rule::exists('interests', 'slug')->where('active', true)],
             'body' => ['required', 'string', 'max:3000'],
         ]);
 
         $subject = 'طلب استثماري';
         if (! empty($data['interest'])) {
-            $subject .= ' — '.LeadInterest::from($data['interest'])->labelAr();
+            $subject .= ' — '.Interest::where('slug', $data['interest'])->value('name');
         }
 
         Message::create([
@@ -208,6 +218,29 @@ class PublicController extends Controller
         return back()->with('success', 'تم إرسال رسالتكم بنجاح — سنعود إليكم في أقرب وقت.');
     }
 
+    /* ─────────────── المناطق في الواجهة العامة ─────────────── */
+
+    public function zones(): View
+    {
+        return view('public.zones', [
+            'zones' => Zone::where('active', true)
+                ->withCount('leads')
+                ->with(['projects' => fn ($q) => $q->where('active', true)->orderBy('sort')])
+                ->orderBy('name')->get(),
+        ]);
+    }
+
+    /** صورة QR الخاصة بمنطقة — عامة ليمكن عرضها وطباعتها من الموقع */
+    public function zoneQrImage(string $slug): Response
+    {
+        $zone = Zone::where('slug', $slug)->where('active', true)->firstOrFail();
+
+        return response(Qr::png(route('zone', ['slug' => $zone->slug])), 200, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
+    }
+
     /* ─────────────── اهتمام المناطق (QR لكل ماكيت) ─────────────── */
 
     public function zone(string $slug): View
@@ -216,7 +249,7 @@ class PublicController extends Controller
 
         return view('public.zone', [
             'zone' => $zone,
-            'interests' => LeadInterest::cases(),
+            'interests' => Interest::active()->orderBy('sort')->get(),
         ]);
     }
 
@@ -228,7 +261,7 @@ class PublicController extends Controller
             'name' => ['required', 'string', 'max:190'],
             'mobile' => ['required', 'string', 'max:30'],
             'interests' => ['required', 'array', 'min:1'],
-            'interests.*' => [Rule::in(array_column(LeadInterest::cases(), 'value'))],
+            'interests.*' => [Rule::exists('interests', 'slug')->where('active', true)],
             'notes' => ['nullable', 'string', 'max:1000'],
         ]);
 

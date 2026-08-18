@@ -25,9 +25,10 @@
     <div class="nav-side">
       <nav class="main-nav">
         <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">الرئيسية</a>
+        <a href="{{ route('zones') }}" class="{{ request()->routeIs('zones') ? 'active' : '' }}">المناطق</a>
         <a href="{{ route('investors') }}" class="{{ request()->routeIs('investors') ? 'active' : '' }}">المستثمرون</a>
         <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">تواصل معنا</a>
-        <a href="{{ route('register') }}" class="btn btn-lime">سجّل حضورك</a>
+        <a href="{{ route('register') }}" class="btn btn-lime">اطلب دعوتك</a>
       </nav>
       <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -44,9 +45,10 @@
   </div>
   <nav class="drawer-nav">
     <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}">الرئيسية</a>
-    <a href="{{ route('investors') }}" class="{{ request()->routeIs('investors') ? 'active' : '' }}">المستثمرون</a>
+    <a href="{{ route('zones') }}" class="{{ request()->routeIs('zones') ? 'active' : '' }}">المناطق</a>
+        <a href="{{ route('investors') }}" class="{{ request()->routeIs('investors') ? 'active' : '' }}">المستثمرون</a>
     <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">تواصل معنا</a>
-    <a href="{{ route('register') }}" class="drawer-cta">سجّل حضورك</a>
+    <a href="{{ route('register') }}" class="drawer-cta">اطلب دعوتك</a>
   </nav>
   <div class="drawer-foot">
     <a href="{{ route('login') }}">دخول الموظفين</a>
@@ -69,7 +71,8 @@
       <div>
         <h4>روابط</h4>
         <a href="{{ route('home') }}">الرئيسية</a>
-        <a href="{{ route('register') }}">تسجيل الحضور</a>
+        <a href="{{ route('register') }}">طلب حضور</a>
+        <a href="{{ route('zones') }}">مناطق المعرض</a>
         <a href="{{ route('investors') }}">المستثمرون</a>
         <a href="{{ route('contact') }}">تواصل معنا</a>
       </div>
