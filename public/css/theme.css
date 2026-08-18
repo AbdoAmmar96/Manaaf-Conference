@@ -242,7 +242,13 @@ body.drawer-open { overflow: hidden; }
 .admin-nav a:hover { background: rgba(255,255,255,.1); color: var(--white); }
 .admin-nav a.active { background: var(--lime); color: var(--green-footer); }
 .admin-user { display: flex; align-items: center; gap: .8rem; font-size: .82rem; flex-shrink: 0; }
-.admin-user .role-chip { background: rgba(153,189,62,.2); color: var(--lime); border-radius: 999px; padding: .2rem .75rem; font-size: .72rem; }
+.admin-user-id { text-align: left; display: flex; flex-direction: column; align-items: flex-start; gap: .22rem; }
+.admin-user .user-name { color: var(--white); font-weight: 600; line-height: 1.4; }
+.admin-user .role-chip {
+  display: inline-block; background: transparent; color: var(--white);
+  border: 1px solid rgba(255,255,255,.55); border-radius: 999px;
+  padding: .2rem .8rem; font-size: .72rem; font-weight: 600; line-height: 1.6;
+}
 .btn-logout { background: transparent; border: 1px solid rgba(255,255,255,.3); color: var(--white); border-radius: 999px; padding: .35rem .9rem; font: inherit; font-size: .78rem; cursor: pointer; }
 .btn-logout:hover { background: rgba(255,255,255,.12); }
 
@@ -368,3 +374,74 @@ details.add-box .box-body { padding: 1.3rem; }
 .qr-cta .txt { max-width: 320px; text-align: right; }
 .qr-cta .txt h3 { color: var(--green-heading); margin-bottom: .5rem; }
 .qr-cta .txt p { color: var(--muted); font-size: .9rem; margin-bottom: 1.1rem; }
+
+/* ============ طلب استثماري مباشر (صفحة المستثمرين) ============ */
+.invest-grid,
+.contact-grid {
+  display: grid; grid-template-columns: 1.45fr .95fr;
+  gap: 1.6rem; align-items: start;
+}
+@media (max-width: 900px) {
+  .invest-grid, .contact-grid { grid-template-columns: 1fr; }
+}
+
+.invest-form .eyebrow {
+  color: var(--brand-orange); font-weight: 700; font-size: .85rem; letter-spacing: .5px;
+}
+.invest-title { color: var(--green-heading); font-size: clamp(1.25rem, 2.4vw, 1.65rem); margin: .35rem 0 .5rem; }
+.invest-sub { color: var(--muted); font-size: .9rem; margin-bottom: 1.5rem; line-height: 1.9; }
+
+/* ============ البطاقة الجانبية (QR / بيانات التواصل) ============ */
+.side-card {
+  background: var(--sand); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 1.7rem 1.5rem; text-align: center;
+}
+.side-card h3 { color: var(--green-heading); font-size: 1.02rem; margin-bottom: .3rem; }
+.side-card > p { color: var(--muted); font-size: .85rem; line-height: 2; }
+.side-card .qr-frame { margin: .9rem 0 1rem; }
+.side-card .qr-frame img { width: 190px; height: 190px; }
+
+.side-points {
+  list-style: none; margin-top: 1.2rem; padding-top: 1.2rem;
+  border-top: 1px solid var(--line); text-align: right;
+}
+.side-points li {
+  position: relative; padding-inline-start: 1.4rem; margin-bottom: .6rem;
+  font-size: .86rem; font-weight: 600; color: var(--ink);
+}
+.side-points li::before {
+  content: "✓"; position: absolute; inset-inline-start: 0;
+  color: var(--green); font-weight: 800;
+}
+
+/* ============ بيانات التواصل — بجانب نموذج «تواصل معنا» ============ */
+.contact-aside { text-align: right; }
+.contact-aside h3 { text-align: right; margin-bottom: 1.1rem; }
+
+.info-list { list-style: none; }
+.info-list li {
+  display: flex; gap: .8rem; align-items: flex-start;
+  padding: .85rem 0; border-bottom: 1px solid var(--line);
+}
+.info-list li:last-child { border-bottom: 0; }
+.info-list .ico { font-size: 1.05rem; line-height: 1.6; flex: none; }
+.info-list b {
+  display: block; color: var(--green-heading);
+  font-size: .78rem; font-weight: 700; margin-bottom: .18rem;
+}
+.info-list a, .info-list span { font-size: .89rem; color: var(--ink); line-height: 1.8; }
+.info-list a { color: var(--green); font-weight: 700; text-decoration: none; }
+.info-list a:hover { text-decoration: underline; }
+.info-list [dir="ltr"] { display: inline-block; direction: ltr; unicode-bidi: isolate; }
+
+.aside-cta { margin-top: 1.4rem; padding-top: 1.3rem; border-top: 1px solid var(--line); }
+.aside-cta p { font-size: .85rem; color: var(--muted); margin-bottom: .7rem; }
+
+/* ============ زر ختامي وسط القسم ============ */
+.section-cta { text-align: center; margin-top: 2.4rem; }
+
+/* ============ رابط جهة التطوير في الفوتر ============ */
+.site-footer .credit-link {
+  display: inline; color: var(--lime); font-weight: 700; opacity: 1;
+}
+.site-footer .credit-link:hover { text-decoration: underline; }

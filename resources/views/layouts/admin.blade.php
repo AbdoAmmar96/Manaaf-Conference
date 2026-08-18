@@ -9,7 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-<link rel="icon" type="image/png" href="{{ asset('brand/icon-green.png') }}">
+<link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('brand/favicon-32.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('brand/icon-192.png') }}">
+<link rel="apple-touch-icon" href="{{ asset('brand/apple-touch-icon.png') }}">
+<meta name="theme-color" content="#06782C">
 </head>
 <body class="admin-body">
 
@@ -40,8 +44,11 @@
     </nav>
 
     <div class="admin-user">
-      <div style="text-align:left">
-        <div>{{ $user->name }}</div>
+      <div class="admin-user-id">
+        {{-- يُخفى الاسم إذا كان مطابقًا لمسمّى الدور حتى لا يتكرر --}}
+        @if($user->name !== $user->role->labelAr())
+          <div class="user-name">{{ $user->name }}</div>
+        @endif
         <span class="role-chip">{{ $user->role->labelAr() }}</span>
       </div>
       <form method="POST" action="{{ route('logout') }}">

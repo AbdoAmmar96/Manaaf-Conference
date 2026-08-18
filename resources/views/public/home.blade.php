@@ -1,6 +1,6 @@
 @extends('layouts.public')
 
-@section('title', $eventName)
+@section('title', 'حفل الافتتاح')
 
 @section('content')
 

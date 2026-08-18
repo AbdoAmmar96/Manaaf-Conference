@@ -38,6 +38,15 @@ class DatabaseSeeder extends Seeder
         Setting::set('event_venue', 'مدينة منافع — الطائف، المملكة العربية السعودية');
         Setting::set('investor_qr_token', Str::random(32));
 
+        // ── بيانات التواصل (تظهر في صفحة «تواصل معنا») ────────────────────
+        // اتركها فارغة ولن تظهر في الصفحة — املأها ببيانات منافع الفعلية
+        Setting::set('contact_website', 'manafi.sa');
+        Setting::set('contact_phone', '');
+        Setting::set('contact_whatsapp', '');
+        Setting::set('contact_email', '');
+        Setting::set('contact_hours', 'الأحد – الخميس · ٩:٠٠ صباحًا – ٥:٠٠ مساءً');
+        Setting::set('contact_map_url', '');
+
         // ── مناطق المعرض / الماكيتات (بأسماء القطاعات الستة) ────────────
         $zones = [
             ['name' => 'الورش الحرفية والصناعية', 'slug' => 'workshops'],

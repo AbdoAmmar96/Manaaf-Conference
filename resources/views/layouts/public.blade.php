@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>@yield('title', 'حفل افتتاح مدينة منافع')</title>
+<title>@yield('title', 'حفل الافتتاح') — مدينة منافع</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{{ asset('css/theme.css') }}">
-<link rel="icon" type="image/png" href="{{ asset('brand/icon-green.png') }}">
+<link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('brand/favicon-32.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('brand/icon-192.png') }}">
+<link rel="apple-touch-icon" href="{{ asset('brand/apple-touch-icon.png') }}">
+<meta name="theme-color" content="#06782C">
 </head>
 <body>
 
@@ -77,7 +81,7 @@
     </div>
     <div class="credit">
       © {{ date('Y') }} مدينة منافع الصناعية المتكاملة — تطوير وتنفيذ: شركة البوابة الغربية للمقاولات العامة المحدودة.<br>
-      تصميم وتطوير الموقع: شركة شريك الأعمال لتقنية المعلومات
+      تصميم وتطوير الموقع: <a href="https://bp-eg.com/" target="_blank" rel="noopener" class="credit-link">شركة شريك الأعمال لتقنية المعلومات</a>
     </div>
   </div>
 </footer>

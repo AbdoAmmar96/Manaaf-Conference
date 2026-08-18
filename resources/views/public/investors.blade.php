@@ -10,7 +10,63 @@
   </div>
 </section>
 
-<section class="section">
+{{-- ═══ طلب استثماري مباشر — أسفل الهيرو مباشرة ═══ --}}
+<section class="section" id="investor-request">
+  <div class="container">
+    <div class="invest-grid fade-up">
+
+      <div class="panel wide invest-form">
+        <span class="eyebrow">قدّم طلبك الآن</span>
+        <h2 class="invest-title">طلب استثماري مباشر</h2>
+        <p class="invest-sub">عبّئ النموذج وسيتواصل معك فريق الاستثمار لعرض الفرص المناسبة لاهتمامك.</p>
+
+        @if(session('success'))
+          <div class="alert alert-success">{{ session('success') }}</div>
+        @endif
+        @if($errors->any())
+          <div class="alert alert-error">{{ $errors->first() }}</div>
+        @endif
+
+        <form method="POST" action="{{ route('investor.request.store') }}">
+          @csrf
+          <div class="form-grid">
+            <div class="field"><label>الاسم الكامل *</label><input name="name" value="{{ old('name') }}" required></div>
+            <div class="field"><label>رقم الجوال *</label><input name="mobile" value="{{ old('mobile') }}" required inputmode="tel"></div>
+            <div class="field"><label>الشركة / الجهة</label><input name="company" value="{{ old('company') }}"></div>
+            <div class="field"><label>البريد الإلكتروني</label><input type="email" name="email" value="{{ old('email') }}"></div>
+            <div class="field full">
+              <label>مجال الاهتمام</label>
+              <select name="interest">
+                <option value="">— اختر المجال —</option>
+                @foreach($interests as $interest)
+                  <option value="{{ $interest->value }}" @selected(old('interest') == $interest->value)>{{ $interest->labelAr() }}</option>
+                @endforeach
+              </select>
+            </div>
+            <div class="field full"><label>تفاصيل الطلب *</label><textarea name="body" rows="4" required>{{ old('body') }}</textarea></div>
+            <div class="full"><button type="submit" class="btn btn-green btn-block">إرسال الطلب</button></div>
+          </div>
+        </form>
+      </div>
+
+      <aside class="side-card">
+        <h3>أو امسح الكود بجوالك</h3>
+        <div class="qr-frame">
+          <img src="{{ route('investor.qr.image') }}" alt="QR طلبات المستثمرين">
+        </div>
+        <p>كود ثابت لطلبات المستثمرين — يفتح نموذج الطلب مباشرة على جوالك، ويمكن طباعته ووضعه في جناح الاستثمار بالمعرض.</p>
+        <ul class="side-points">
+          <li>عقود تأجير طويلة الأجل</li>
+          <li>بنية تحتية ومرافق جاهزة</li>
+          <li>ستة قطاعات متخصصة متكاملة</li>
+        </ul>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
   <div class="container">
     <div class="stats-band fade-up">
       <div class="stat-pub"><b>+2.53</b><span>مليون م² المساحة الإجمالية</span></div>
@@ -21,7 +77,7 @@
   </div>
 </section>
 
-<section class="section alt">
+<section class="section">
   <div class="container">
     <div class="section-head">
       <span class="eyebrow">قطاعات المدينة</span>
@@ -35,24 +91,8 @@
         </div>
       @endforeach
     </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="container">
-    <div class="section-head">
-      <span class="eyebrow">قدّم طلبك</span>
-      <h2>طلب استثماري مباشر</h2>
-    </div>
-    <div class="qr-cta fade-up">
-      <div class="qr-frame" style="margin:0">
-        <img src="{{ route('investor.qr.image') }}" alt="QR طلبات المستثمرين">
-      </div>
-      <div class="txt">
-        <h3>امسح الكود بجوالك</h3>
-        <p>كود ثابت لطلبات المستثمرين — يفتح نموذج الطلب مباشرة، ويمكنكم أيضًا تعبئته من هنا.</p>
-        <a href="{{ route('investor.request') }}" class="btn btn-lime">تقديم طلب استثماري</a>
-      </div>
+    <div class="section-cta">
+      <a href="#investor-request" class="btn btn-lime">قدّم طلبك الاستثماري</a>
     </div>
   </div>
 </section>

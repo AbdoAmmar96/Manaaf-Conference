@@ -121,6 +121,7 @@ class PublicController extends Controller
     {
         return view('public.investors', [
             'zones' => Zone::where('active', true)->get(),
+            'interests' => LeadInterest::cases(),
         ]);
     }
 
@@ -168,7 +169,9 @@ class PublicController extends Controller
             'source' => $request->input('src') === 'qr' ? 'investor_qr' : 'contact_form',
         ]);
 
-        return back()->with('success', 'تم استلام طلبكم بنجاح — سيتواصل معكم فريق الاستثمار في أقرب وقت.');
+        return back()
+            ->withFragment('investor-request')
+            ->with('success', 'تم استلام طلبكم بنجاح — سيتواصل معكم فريق الاستثمار في أقرب وقت.');
     }
 
     /* ─────────────── تواصل معنا ─────────────── */
@@ -177,6 +180,14 @@ class PublicController extends Controller
     {
         return view('public.contact', [
             'eventVenue' => Setting::get('event_venue'),
+            'contact' => [
+                'phone' => Setting::get('contact_phone'),
+                'whatsapp' => Setting::get('contact_whatsapp'),
+                'email' => Setting::get('contact_email'),
+                'website' => Setting::get('contact_website'),
+                'hours' => Setting::get('contact_hours'),
+                'map' => Setting::get('contact_map_url'),
+            ],
         ]);
     }
 
