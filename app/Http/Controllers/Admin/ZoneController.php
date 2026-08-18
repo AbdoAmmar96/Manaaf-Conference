@@ -29,9 +29,10 @@ class ZoneController extends Controller
             'description' => ['nullable', 'string', 'max:1000'],
         ]);
 
-        $data['slug'] = $data['slug'] ?: Str::slug($data['name']);
+        // الحقل قد لا يُرسَل إطلاقًا، فلا يوجد مفتاحه في نتيجة التحقق
+        $data['slug'] = ($data['slug'] ?? null) ?: Str::slug($data['name']);
 
-        // Str::slug يعيد نصًا فارغًا مع الأسماء العربية — نولّد بديلًا مقروءًا
+        // أسماء لا ينتج عنها معرّف صالح (رموز فقط مثلًا) — نولّد بديلًا فريدًا
         if ($data['slug'] === '' || Zone::where('slug', $data['slug'])->exists()) {
             $data['slug'] = 'zone-'.Str::lower(Str::random(6));
         }
