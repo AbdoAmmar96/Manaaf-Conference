@@ -78,6 +78,7 @@
         <th>حالة الطلب</th>
         <th>الحضور</th>
         <th>بطاقة الدعوة</th>
+        @if(auth()->user()->isAdmin())<th>حذف</th>@endif
       </tr>
     </thead>
     <tbody>
@@ -156,9 +157,22 @@
               @endif
             @endif
           </td>
+
+          @if(auth()->user()->isAdmin())
+            @php($delMsg = 'حذف «'.$guest->name.'» نهائيًا؟'
+              .($guest->isCheckedIn() ? "\n\n⚠ هذا الضيف سجّل حضوره بالفعل، وحذفه ينقص عدد الحضور في التقارير." : '')
+              .($guest->leads_count ? "\n\nله {$guest->leads_count} اهتمام مسجّل — سيبقى محفوظًا باسمه وجواله." : ''))
+            <td style="white-space:nowrap">
+              <form method="POST" action="{{ route('admin.guests.destroy', $guest) }}" class="cell-form"
+                    onsubmit="return confirm(@js($delMsg))">
+                @csrf @method('DELETE')
+                <button type="submit" class="mini-btn danger">حذف</button>
+              </form>
+            </td>
+          @endif
         </tr>
       @empty
-        <tr><td colspan="6" style="text-align:center;color:var(--muted)">لا يوجد ضيوف مطابقون.</td></tr>
+        <tr><td colspan="{{ auth()->user()->isAdmin() ? 7 : 6 }}" style="text-align:center;color:var(--muted)">لا يوجد ضيوف مطابقون.</td></tr>
       @endforelse
     </tbody>
   </table>

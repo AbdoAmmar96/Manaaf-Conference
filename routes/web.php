@@ -104,6 +104,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     /* الإعدادات والتقارير — المدير فقط */
     Route::middleware('role:admin')->group(function () {
+        /* حذف الضيف إجراء لا رجعة فيه، فهو للمدير وحده دون الاستقبال */
+        Route::delete('/guests/{guest}', [GuestController::class, 'destroy'])->name('guests.destroy');
+
         Route::get('/zones', [ZoneController::class, 'index'])->name('zones.index');
         Route::post('/zones', [ZoneController::class, 'store'])->name('zones.store');
         Route::patch('/zones/{zone}', [ZoneController::class, 'update'])->name('zones.update');

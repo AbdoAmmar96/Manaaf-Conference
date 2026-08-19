@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Guest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
@@ -16,6 +17,7 @@ class GuestController extends Controller
     public function index(Request $request): View
     {
         $guests = Guest::query()
+            ->withCount('leads')
             ->when($request->filled('q'), function ($query) use ($request) {
                 $q = trim($request->query('q'));
                 $query->where(fn ($w) => $w->where('name', 'like', "%{$q}%")->orWhere('mobile', 'like', "%{$q}%"));
@@ -108,5 +110,32 @@ class GuestController extends Controller
         $guest->update(['card_sent_at' => now(), 'card_sent_via' => $via]);
 
         return back()->with('success', "سُجّل إرسال بطاقة «{$guest->name}» عبر ".($via === 'whatsapp' ? 'واتساب' : 'البريد').'.');
+    }
+
+    /**
+     * حذف الضيف نهائيًا.
+     *
+     * leads.guest_id مضبوط على nullOnDelete، فحذف الضيف لا يحذف اهتماماته
+     * المسجّلة بل يقطع ارتباطها به — وLead::displayName() تقرأ الاسم من
+     * الضيف أولًا، فكانت تلك السجلات ستظهر لفريق المبيعات «غير معروف» بلا
+     * جوال. لذلك نُثبّت اسم الضيف وجواله في حقلي الزائر المباشر قبل الحذف
+     * حتى يبقى سجل الاهتمام صالحًا للمتابعة.
+     */
+    public function destroy(Guest $guest): RedirectResponse
+    {
+        $name = $guest->name;
+
+        DB::transaction(function () use ($guest) {
+            $guest->leads()->whereNull('walk_in_name')->update([
+                'walk_in_name' => $guest->name,
+                'walk_in_mobile' => $guest->mobile,
+            ]);
+
+            $guest->delete();
+        });
+
+        return redirect()
+            ->route('admin.guests.index')
+            ->with('success', "تم حذف الضيف «{$name}» — اهتماماته المسجّلة محفوظة باسمه.");
     }
 }
