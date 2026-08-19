@@ -43,6 +43,15 @@
                 @endforeach
               </select>
             </div>
+            <div class="field full">
+              <label>المنطقة التي تهتم بها</label>
+              <select name="zone_id">
+                <option value="">— طلب عام (غير مرتبط بمنطقة) —</option>
+                @foreach($zones as $zone)
+                  <option value="{{ $zone->id }}" @selected(old('zone_id') == $zone->id)>{{ $zone->name }}</option>
+                @endforeach
+              </select>
+            </div>
             <div class="field full"><label>تفاصيل الطلب *</label><textarea name="body" rows="4" required>{{ old('body') }}</textarea></div>
             <div class="full"><button type="submit" class="btn btn-green btn-block">إرسال الطلب</button></div>
           </div>

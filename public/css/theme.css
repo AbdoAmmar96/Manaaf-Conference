@@ -205,7 +205,8 @@ body.drawer-open { overflow: hidden; }
 }
 .qr-frame img { width: 300px; height: 300px; image-rendering: pixelated; }
 
-.badge { display: inline-block; border-radius: 999px; padding: .25rem .9rem; font-size: .78rem; font-weight: 700; }
+/* nowrap حتى لا ينكسر «بانتظار الموافقة» و«حضر 01:44 PM» داخل خلية الجدول */
+.badge { display: inline-block; border-radius: 999px; padding: .25rem .9rem; font-size: .78rem; font-weight: 700; white-space: nowrap; }
 .badge-vip { background: #fdf3e3; color: var(--brand-orange); border: 1px solid #f3ddb8; }
 .badge-green { background: #e8f4ec; color: var(--green); border: 1px solid #cfe6d6; }
 .badge-gray { background: var(--sand); color: var(--muted); border: 1px solid var(--line); }
