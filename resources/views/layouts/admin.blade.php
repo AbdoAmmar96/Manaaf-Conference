@@ -30,7 +30,7 @@
       <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">الرئيسية</a>
       @if($user->hasRole(\App\Enums\UserRole::Admin, \App\Enums\UserRole::Reception))
         <a href="{{ route('admin.guests.index') }}" class="{{ request()->routeIs('admin.guests.*') ? 'active' : '' }}">الضيوف</a>
-        <a href="{{ route('admin.checkin') }}" class="{{ request()->routeIs('admin.checkin') ? 'active' : '' }}">تسجيل الدخول</a>
+        <a href="{{ route('admin.checkin') }}" class="{{ request()->routeIs('admin.checkin') ? 'active' : '' }}">تسجيل الضيوف</a>
       @endif
       <a href="{{ route('admin.messages.index') }}" class="{{ request()->routeIs('admin.messages.*') ? 'active' : '' }}">الرسائل</a>
       @if($user->hasRole(\App\Enums\UserRole::Admin, \App\Enums\UserRole::Sales, \App\Enums\UserRole::Reception))

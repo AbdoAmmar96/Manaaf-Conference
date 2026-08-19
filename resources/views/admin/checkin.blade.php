@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
-@section('title', 'تسجيل الدخول')
+@section('title', 'تسجيل الضيوف')
 
 @section('content')
-<h1 class="page-title">تسجيل الدخول</h1>
+<h1 class="page-title">تسجيل الضيوف</h1>
 
 <div class="checkin-grid">
   <div class="scan-panel">
