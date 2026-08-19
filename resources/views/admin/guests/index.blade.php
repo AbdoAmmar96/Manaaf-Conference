@@ -44,6 +44,38 @@
   </div>
 </details>
 
+<details class="add-box invite-box">
+  <summary>▣ كود دعوة الحفل — للطباعة والمشاركة</summary>
+  <div class="box-body">
+    <div class="invite-qr">
+      <div class="invite-qr-img">
+        <img src="{{ route('invite.qr.image') }}" alt="كود دعوة الحفل">
+      </div>
+
+      <div class="invite-qr-body">
+        <p><b>رمز واحد ثابت للحفل كله</b> — اطبعه على بطاقات الدعوة واللوحات
+          الإرشادية، أو أرسله في مجموعات واتساب. لا ينتهي ولا يتغيّر.</p>
+
+        <p class="invite-qr-how"><b>ماذا يحدث عند مسحه؟</b> يفتح نموذج طلب الحضور
+          على جوال الضيف، فيكتب <b>بياناته بنفسه</b> — الاسم والجوال والجهة
+          والمنصب والبريد وصفة الحضور. يصلك الطلب في هذا الجدول بحالة
+          «بانتظار الموافقة»، وبعد اعتماده ترسل له بطاقة دعوته الخاصة بكود
+          QR فردي هو ما يُمسح عند البوابة.</p>
+
+        <p class="invite-qr-warn">⚠ هذا الكود للتسجيل لا للدخول — لا يُقبل عند
+          البوابة، وبطاقة كل ضيف تُصدر له وحده بعد الاعتماد.</p>
+
+        <div class="invite-qr-links">
+          <a href="{{ route('invite.qr.image') }}" download="كود-دعوة-الحفل.png" class="mini-btn">⬇ تحميل الكود</a>
+          <a href="{{ route('register', ['src' => 'qr']) }}" target="_blank" rel="noopener" class="mini-btn">فتح النموذج</a>
+          <input type="text" class="invite-qr-url" readonly onclick="this.select()"
+                 value="{{ route('register', ['src' => 'qr']) }}">
+        </div>
+      </div>
+    </div>
+  </div>
+</details>
+
 <form method="GET" class="filter-bar">
   <input type="text" name="q" value="{{ request('q') }}" placeholder="بحث بالاسم أو الجوال…">
   <select name="type">
@@ -98,7 +130,8 @@
           <td>
             @if($guest->approval_status === \App\Enums\ApprovalStatus::Pending)
               <span class="badge badge-vip">بانتظار الموافقة</span>
-              @if($guest->registered_via === 'self')<div class="row-note">طلب من الموقع</div>@endif
+              @if($guest->registered_via === 'qr')<div class="row-note">طلب من كود الدعوة</div>
+              @elseif($guest->registered_via === 'self')<div class="row-note">طلب من الموقع</div>@endif
             @elseif($guest->approval_status === \App\Enums\ApprovalStatus::Rejected)
               <span class="badge badge-red">مرفوض</span>
               @if($guest->rejection_reason)<div class="row-note">{{ $guest->rejection_reason }}</div>@endif

@@ -24,6 +24,7 @@
     </p>
     <form method="POST" action="{{ route('register.store') }}">
       @csrf
+      @if($fromQr)<input type="hidden" name="src" value="qr">@endif
       <div class="form-grid">
         <div class="field"><label>الاسم الكامل *</label><input name="name" value="{{ old('name') }}" required></div>
         <div class="field"><label>رقم الجوال *</label><input name="mobile" value="{{ old('mobile') }}" required placeholder="05xxxxxxxx" inputmode="tel"></div>

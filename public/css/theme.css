@@ -632,6 +632,28 @@ table.perms .perm-col { text-align: center; width: 6.5rem; }
 .zone-public-links { display: flex; flex-direction: column; gap: .5rem; align-items: center; margin-top: 1rem; }
 .zone-public-links .btn { width: 100%; }
 
+/* ============ كود دعوة الحفل في شاشة الضيوف ============ */
+.invite-qr { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; }
+.invite-qr-img {
+  background: var(--white); border: 2px solid var(--green); border-radius: var(--radius);
+  padding: 10px; flex-shrink: 0;
+}
+.invite-qr-img img { width: 178px; height: 178px; display: block; image-rendering: pixelated; }
+.invite-qr-body { flex: 1; min-width: 260px; font-size: .86rem; line-height: 2; color: var(--muted); }
+.invite-qr-body b { color: var(--green-heading); }
+.invite-qr-how { margin-top: .7rem; }
+.invite-qr-warn {
+  margin-top: .7rem; background: #fdf3e3; color: #8a5200; border: 1px solid #f3ddb8;
+  border-radius: 10px; padding: .55rem .9rem; font-size: .8rem; line-height: 1.9;
+}
+.invite-qr-links { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; margin-top: 1rem; }
+.invite-qr-url {
+  flex: 1; min-width: 220px; font: inherit; font-size: .78rem; direction: ltr; text-align: left;
+  border: 1px solid var(--line); border-radius: 999px; padding: .42rem .9rem;
+  background: var(--sand); color: var(--muted);
+}
+@media (max-width: 620px) { .invite-qr { justify-content: center; } }
+
 /* ============ اعتماد طلبات الحضور ============ */
 .alert-pending {
   background: #fdf3e3; color: #8a5200; border: 1px solid #f3ddb8;

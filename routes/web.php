@@ -31,6 +31,7 @@ Route::post('/rsvp/{token}', [PublicController::class, 'rsvpRespond'])->name('rs
 
 Route::get('/my-qr/{token}', [PublicController::class, 'myQr'])->name('guest.qr');
 Route::get('/qr-image/investor.png', [PublicController::class, 'investorQrImage'])->name('investor.qr.image');
+Route::get('/qr-image/invite.png', [PublicController::class, 'inviteQrImage'])->name('invite.qr.image');
 Route::get('/qr-image/{token}.png', [PublicController::class, 'qrImage'])->name('guest.qr.image');
 
 Route::get('/investors', [PublicController::class, 'investors'])->name('investors');

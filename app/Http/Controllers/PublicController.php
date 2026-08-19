@@ -29,9 +29,23 @@ class PublicController extends Controller
 
     /* ─────────────── تسجيل الحضور (الحجز الذاتي) ─────────────── */
 
-    public function register(): View
+    public function register(Request $request): View
     {
-        return view('public.register');
+        return view('public.register', [
+            'fromQr' => $request->query('src') === 'qr',
+        ]);
+    }
+
+    /**
+     * كود دعوة الحفل — رمز واحد ثابت يُطبع على البطاقات واللوحات.
+     * مسحه يفتح نموذج طلب الحضور ليعبّئه الضيف بنفسه على جواله.
+     */
+    public function inviteQrImage(): Response
+    {
+        return response(Qr::png(route('register', ['src' => 'qr'])), 200, [
+            'Content-Type' => 'image/png',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
     }
 
     public function registerStore(Request $request): RedirectResponse
@@ -58,7 +72,8 @@ class PublicController extends Controller
         Guest::create($data + [
             'approval_status' => ApprovalStatus::Pending,
             'rsvp_status' => 'pending',
-            'registered_via' => 'self',
+            // نميّز القادم من كود الدعوة المطبوع عن القادم من الموقع لقياس أثر الطباعة
+            'registered_via' => $request->input('src') === 'qr' ? 'qr' : 'self',
         ]);
 
         return redirect()
