@@ -416,6 +416,10 @@ details.add-box .box-body { padding: 1.3rem; }
 .side-card .qr-frame { margin: .9rem 0 1rem; }
 .side-card .qr-frame img { width: 190px; height: 190px; }
 
+/* كتلة كود الدعوة أعلى بطاقة صفحة تواصل معنا */
+.aside-qr { padding-bottom: 1.3rem; margin-bottom: 1.3rem; border-bottom: 1px solid var(--line); }
+.aside-qr > p { color: var(--muted); font-size: .82rem; line-height: 1.9; margin-bottom: .9rem; }
+
 .side-points {
   list-style: none; margin-top: 1.2rem; padding-top: 1.2rem;
   border-top: 1px solid var(--line); text-align: right;

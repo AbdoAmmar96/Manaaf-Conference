@@ -50,6 +50,15 @@
 
       {{-- ─── بيانات التواصل — بجانب النموذج ─── --}}
       <aside class="side-card contact-aside">
+        <div class="aside-qr">
+          <h3>كود دعوة الحفل</h3>
+          <div class="qr-frame">
+            <img src="{{ route('invite.qr.image') }}" alt="كود دعوة الحفل" loading="lazy">
+          </div>
+          <p>امسحه بجوالك ليفتح نموذج طلب الحضور مباشرة.</p>
+          <a href="{{ route('register') }}" class="btn btn-lime btn-block">اطلب دعوتك</a>
+        </div>
+
         <h3>بيانات التواصل</h3>
         <ul class="info-list">
 

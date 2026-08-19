@@ -10,8 +10,14 @@
   </div>
 </section>
 
-<div class="form-page">
-  <div class="panel wide fade-up">
+{{--
+  تخطيط عمودين يعيد استخدام .invest-grid: قاعدة الجوال فيه تعطي .side-card
+  ترتيب -1، فيظهر كود الدعوة قبل النموذج على الجوال ويُمسح مباشرة.
+--}}
+<section class="section">
+  <div class="container">
+    <div class="invest-grid fade-up">
+      <div class="panel wide">
     @if(session('success'))
       <div class="alert alert-success">{{ session('success') }}</div>
     @endif
@@ -46,6 +52,23 @@
         </div>
       </div>
     </form>
+      </div>
+
+      <aside class="side-card">
+        <h3>أو امسح الكود بجوالك</h3>
+        <div class="qr-frame">
+          <img src="{{ route('invite.qr.image') }}" alt="كود دعوة الحفل" loading="lazy">
+        </div>
+        <p>كود واحد ثابت للحفل — يفتح هذا النموذج نفسه على أي جوال، فشاركه مع
+          من تودّ دعوته.</p>
+        <ul class="side-points">
+          <li>تكتب بياناتك بنفسك</li>
+          <li>يراجع الطلب فريق التنظيم</li>
+          <li>تصلك بطاقة الدعوة على واتساب أو البريد</li>
+        </ul>
+      </aside>
+
+    </div>
   </div>
-</div>
+</section>
 @endsection

@@ -37,6 +37,23 @@
 
 <section class="section">
   <div class="container">
+    <div class="qr-cta fade-up">
+      <div class="qr-frame">
+        <img src="{{ route('invite.qr.image') }}" alt="كود دعوة الحفل" loading="lazy">
+      </div>
+      <div class="txt">
+        <h3>دعوتك بمسحة واحدة</h3>
+        <p>وجّه كاميرا جوالك إلى الكود ليفتح نموذج طلب الحضور. تكتب بياناتك،
+          ويراجع الطلب فريق التنظيم، ثم تصلك بطاقة دعوتك على الواتساب أو
+          البريد الإلكتروني.</p>
+        <a href="{{ route('register') }}" class="btn btn-green">اطلب دعوتك</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="container">
     <div class="section-head">
       <span class="eyebrow">عن الحدث</span>
       <h2>مؤتمرٌ يفتتح مرحلة جديدة للطائف</h2>
