@@ -33,7 +33,7 @@ class Permissions
                 'roles' => ['admin', 'reception'],
             ],
             'checkin' => [
-                'title' => 'تسجيل دخول الضيوف',
+                'title' => 'تسجيل الدخول',
                 'description' => 'مسح رمز QR بالكاميرا أو البحث بالاسم وتأكيد الحضور عند البوابة.',
                 'roles' => ['admin', 'reception'],
             ],
