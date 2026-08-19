@@ -15,24 +15,29 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ── حسابات الموظفين ──────────────────────────────────────────────
-        User::updateOrCreate(['email' => 'admin@manafi.sa'], [
-            'name' => 'مدير النظام',
-            'password' => 'ChangeMe@2026',
-            'role' => 'admin',
-        ]);
+        /*
+         * ── حسابات الموظفين ───────────────────────────────────────────────
+         * firstOrCreate لا updateOrCreate: البذرة تُنشئ الحساب إن غاب ولا
+         * تمسّه إن وُجد. مع updateOrCreate كانت إعادة تشغيل البذرة على بيئة
+         * التشغيل تُعيد كلمات المرور إلى القيمة الافتراضية المعروفة.
+         *
+         * كلمة المرور هنا للتهيئة المحلية فقط — تُضبط عبر SEED_PASSWORD في
+         * .env، وكلمات مرور بيئة التشغيل تُغيَّر من شاشة المستخدمين.
+         */
+        $seedPassword = env('SEED_PASSWORD', 'ChangeMe@2026');
 
-        User::updateOrCreate(['email' => 'reception@manafi.sa'], [
-            'name' => 'موظف الاستقبال',
-            'password' => 'ChangeMe@2026',
-            'role' => 'reception',
-        ]);
+        $staff = [
+            ['email' => 'admin@manafi.sa', 'name' => 'مدير النظام', 'role' => 'admin'],
+            ['email' => 'reception@manafi.sa', 'name' => 'موظف الاستقبال', 'role' => 'reception'],
+            ['email' => 'sales@manafi.sa', 'name' => 'موظف المبيعات', 'role' => 'sales'],
+        ];
 
-        User::updateOrCreate(['email' => 'sales@manafi.sa'], [
-            'name' => 'موظف المبيعات',
-            'password' => 'ChangeMe@2026',
-            'role' => 'sales',
-        ]);
+        foreach ($staff as $member) {
+            User::firstOrCreate(
+                ['email' => $member['email']],
+                ['name' => $member['name'], 'role' => $member['role'], 'password' => $seedPassword],
+            );
+        }
 
         // ── إعدادات الحفل ────────────────────────────────────────────────
         Setting::set('event_name', 'حفل افتتاح مدينة منافع الحرفية المتكاملة');

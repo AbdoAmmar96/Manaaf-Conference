@@ -90,13 +90,10 @@ php artisan config:cache && php artisan route:cache && php artisan view:cache
 
 الرابط: <https://conference.manafi.sa/admin/login>
 
-| الدور | البريد | كلمة المرور |
-|---|---|---|
-| مدير النظام | admin@manafi.sa | ChangeMe@2026 |
-| استقبال | reception@manafi.sa | ChangeMe@2026 |
-| مبيعات | sales@manafi.sa | ChangeMe@2026 |
+الحسابات الثلاثة: `admin@manafi.sa` · `reception@manafi.sa` · `sales@manafi.sa`
 
-⚠️ **غيّرها فورًا** من شاشة المستخدمين — كلمات المرور هذه مكتوبة في الكود.
+🔑 **كلمات المرور ليست في المستودع** — هذا المستودع عام. تجدها في ملف
+`بيانات-الدخول.md` على جهاز المطوّر، وهو مُستبعد في `.gitignore`.
 راجع [docs/الصلاحيات.md](docs/الصلاحيات.md) لصلاحيات كل دور.
 
 ---

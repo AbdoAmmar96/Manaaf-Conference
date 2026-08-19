@@ -25,3 +25,6 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# ملف بيانات الدخول — يبقى على الجهاز ولا يُرفع إلى GitHub (المستودع عام)
+/بيانات-الدخول.md
