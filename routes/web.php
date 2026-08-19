@@ -59,12 +59,16 @@ Route::post('/admin/logout', [AuthController::class, 'logout'])->name('logout');
 
 /*
 |--------------------------------------------------------------------------
-| مسح QR الضيف — الرابط المشفر داخل كود كل ضيف (للموظفين فقط)
+| مسح QR الضيف — الرابط المشفر داخل كود كل ضيف
 |--------------------------------------------------------------------------
+| العرض مفتوح: الضيف قد يمسح بطاقته بنفسه فيرى حالتها والوقت المتبقي،
+| ولو مسحها موظف مسجّل دخوله رأى شاشة تأكيد الحضور. أما تسجيل الحضور
+| نفسه فللموظفين وحدهم.
 */
 
+Route::get('/scan/{token}', [CheckinController::class, 'scan'])->name('checkin.scan');
+
 Route::middleware(['auth', 'role:admin,reception'])->group(function () {
-    Route::get('/scan/{token}', [CheckinController::class, 'scan'])->name('checkin.scan');
     Route::post('/scan/{token}', [CheckinController::class, 'scanConfirm'])->name('checkin.scan.confirm');
 });
 

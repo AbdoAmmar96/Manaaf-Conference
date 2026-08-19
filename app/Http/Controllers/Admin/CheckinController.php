@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ApprovalStatus;
 use App\Enums\AttendanceStatus;
+use App\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Models\Guest;
+use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -64,12 +66,31 @@ class CheckinController extends Controller
         return response()->json(['status' => 'ok', 'guest' => $this->card($guest->fresh())]);
     }
 
-    /* صفحة تُفتح عند مسح QR الضيف بكاميرا الجوال مباشرة */
-    public function scan(string $token): View
+    /**
+     * صفحة تُفتح عند مسح QR الضيف بكاميرا الجوال مباشرة.
+     *
+     * الرمز المطبوع على البطاقة يشير إلى هنا، وكان المسار كله محميًا بـauth
+     * فكان الضيف حين يمسح بطاقته بنفسه يُقذف إلى صفحة دخول الموظفين. الآن
+     * يرى الموظف المسجّل شاشة تأكيد الحضور، ويرى الضيف حالة بطاقته والوقت
+     * المتبقي للحفل. تسجيل الحضور يبقى على المسار POST للموظفين وحدهم.
+     */
+    public function scan(Request $request, string $token): View
     {
         $guest = Guest::where('qr_token', $token)->first();
 
-        return view('admin.scan', ['guest' => $guest]);
+        $user = $request->user();
+        $isStaff = $user && $user->active && $user->hasRole(UserRole::Admin, UserRole::Reception);
+
+        if ($isStaff) {
+            return view('admin.scan', ['guest' => $guest]);
+        }
+
+        return view('public.card-status', [
+            'guest' => $guest,
+            'eventName' => Setting::get('event_name', 'حفل افتتاح مدينة منافع'),
+            'eventDate' => Setting::get('event_date'),
+            'eventVenue' => Setting::get('event_venue'),
+        ]);
     }
 
     public function scanConfirm(Request $request, string $token): RedirectResponse

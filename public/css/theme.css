@@ -308,6 +308,14 @@ table.data tr:hover td { background: #fbfaf6; }
   .qr-frame img { width: 260px; height: 260px; }
 }
 
+/* الوحدات الأربع للعدّاد في سطر واحد على الشاشات الضيقة بدل ٣ + ١ */
+@media (max-width: 430px) {
+  .countdown { gap: .45rem; flex-wrap: nowrap; }
+  .countdown .unit { min-width: 0; flex: 1; padding: .8rem .25rem; }
+  .countdown b { font-size: 1.45rem; }
+  .countdown small { font-size: .68rem; }
+}
+
 /* ============ تابلت — الشريط سطر واحد مضغوط ============ */
 @media (max-width: 1080px) {
   .logo img { height: 44px; }
@@ -640,6 +648,43 @@ table.perms .perm-col { text-align: center; width: 6.5rem; }
 .zone-projects-title { width: 100%; font-size: .76rem; color: var(--brand-orange); font-weight: 700; margin-bottom: .2rem; }
 .zone-public-links { display: flex; flex-direction: column; gap: .5rem; align-items: center; margin-top: 1rem; }
 .zone-public-links .btn { width: 100%; }
+
+/* ============ صفحة حالة بطاقة الضيف (عند مسحها بجواله) ============ */
+.card-hero {
+  background: var(--green-footer); color: #fff; text-align: center;
+  padding: 3rem 0 2.6rem; position: relative; overflow: hidden;
+}
+.card-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: url('/brand/watermark.jpg') center/cover no-repeat;
+  opacity: .07; mix-blend-mode: screen;
+}
+.card-hero .container { position: relative; }
+.card-hero h1 { font-size: clamp(1.35rem, 3.2vw, 1.9rem); margin-top: .8rem; }
+.card-hero p {
+  color: rgba(255,255,255,.8); margin-top: .6rem; font-size: .92rem;
+  max-width: 560px; margin-inline: auto; line-height: 2;
+}
+.card-hero p a { color: var(--lime); text-decoration: underline; }
+.card-state {
+  display: inline-block; border-radius: 999px; padding: .45rem 1.4rem;
+  font-size: .92rem; font-weight: 700; border: 1px solid transparent;
+}
+.card-state.ok { background: rgba(153,189,62,.18); color: var(--lime); border-color: rgba(153,189,62,.5); }
+.card-state.wait { background: rgba(243,166,60,.16); color: #f3a63c; border-color: rgba(243,166,60,.45); }
+.card-state.bad { background: rgba(214,69,58,.16); color: #ff9c93; border-color: rgba(214,69,58,.45); }
+
+.card-status-page { max-width: 520px; margin: 2.6rem auto 0; padding-inline: 4%; }
+.card-hint { font-size: .82rem; color: var(--muted); margin-top: 1rem; line-height: 1.9; }
+.card-hint a { color: var(--green); font-weight: 700; text-decoration: underline; }
+.card-venue { font-size: .82rem; color: var(--muted); margin-top: .9rem; }
+
+.card-countdown { background: var(--green-footer); margin-top: 3rem; padding: 2.4rem 0 1.4rem; text-align: center; }
+.card-countdown .eyebrow-light {
+  color: rgba(255,255,255,.7); font-size: .82rem; font-weight: 700; letter-spacing: .5px;
+}
+.card-countdown .countdown { margin: 1.2rem 0 .4rem; }
+.card-started { color: var(--lime); font-weight: 700; font-size: 1rem; padding-bottom: 1rem; }
 
 /* ============ نافذة منبثقة (dialog) ============ */
 dialog.modal {
