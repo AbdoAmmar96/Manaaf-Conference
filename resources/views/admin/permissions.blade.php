@@ -51,9 +51,4 @@
     </tbody>
   </table>
 </div>
-
-<p class="page-hint" style="margin-top:1.4rem">
-  نسخة مكتوبة من هذا الجدول موجودة في ملف <code>docs/الصلاحيات.md</code> داخل المشروع
-  لمشاركتها مع الفريق قبل الحفل.
-</p>
 @endsection

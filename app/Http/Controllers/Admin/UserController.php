@@ -61,9 +61,11 @@ class UserController extends Controller
                 ->where('active', true)->where('id', '!=', $user->id)->count();
 
             if ($otherAdmins === 0) {
-                return back()->withErrors([
-                    'role' => 'لا يمكن تغيير دور آخر مدير نشط أو تعطيله — عيّن مديرًا آخر أولًا.',
-                ]);
+                return back()
+                    ->withInput($request->except(['password', 'password_confirmation']))
+                    ->withErrors([
+                        'role' => 'لا يمكن تغيير دور آخر مدير نشط أو تعطيله — عيّن مديرًا آخر أولًا.',
+                    ]);
             }
         }
 

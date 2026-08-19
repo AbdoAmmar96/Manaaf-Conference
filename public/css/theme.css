@@ -475,7 +475,7 @@ details.add-box .box-body { padding: 1.3rem; }
 .section-sub { color: var(--green-heading); font-size: 1.05rem; margin: 1.8rem 0 1rem; }
 
 /* صندوق قابل للطي (إضافة / تعديل) */
-.panel-box, .lead-edit, .row-edit {
+.panel-box, .lead-edit {
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
   margin-bottom: 1.2rem; overflow: hidden;
 }
@@ -484,16 +484,11 @@ details.add-box .box-body { padding: 1.3rem; }
   color: var(--green-heading); background: var(--sand); list-style: none;
 }
 .panel-box > summary::-webkit-details-marker,
-.lead-edit > summary::-webkit-details-marker,
-.row-edit > summary::-webkit-details-marker { display: none; }
+.lead-edit > summary::-webkit-details-marker { display: none; }
 .panel-box > summary::after, .lead-edit > summary::after { content: " ▾"; opacity: .6; }
 .panel-box[open] > summary::after, .lead-edit[open] > summary::after { content: " ▴"; }
 .box-body { padding: 1.2rem 1.1rem; }
 .lead-edit { margin: 1rem 0 0; border-radius: 12px; }
-.row-edit { border: 0; background: transparent; margin: 0; overflow: visible; }
-.row-edit > summary { list-style: none; cursor: pointer; display: inline-block; }
-.row-edit .box-body { background: var(--sand); border-radius: 12px; margin-top: .6rem; min-width: 260px; }
-
 /* بطاقة اهتمام / رسالة */
 .lead-card {
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
@@ -577,6 +572,16 @@ table.perms .perm-col { text-align: center; width: 6.5rem; }
 
 /* عناصر مساعدة */
 .switch { display: flex; align-items: center; gap: .55rem; font-size: .86rem; font-weight: 600; cursor: pointer; }
+/*
+ * مفتاح يقف داخل شبكة الحقول بجوار حقل عادي: يأخذ هيئة الحقل وارتفاعه
+ * ليحاذيه. الانتقاء .field label.switch-box يسبق .field label الذي يفرض
+ * display: block ولونًا للعناوين ومسافة سفلية.
+ */
+.field label.switch-box {
+  display: flex; width: 100%; margin-bottom: 0;
+  padding: .75rem 1rem; border: 1.5px solid var(--line); border-radius: 12px;
+  background: var(--white); color: inherit; font-size: .92rem; font-weight: 600;
+}
 .switch input { width: 17px; height: 17px; accent-color: var(--green); }
 .field-hint { display: block; font-size: .74rem; color: var(--muted); margin-top: .25rem; }
 .btn-outline-green {
@@ -635,6 +640,34 @@ table.perms .perm-col { text-align: center; width: 6.5rem; }
 .zone-projects-title { width: 100%; font-size: .76rem; color: var(--brand-orange); font-weight: 700; margin-bottom: .2rem; }
 .zone-public-links { display: flex; flex-direction: column; gap: .5rem; align-items: center; margin-top: 1rem; }
 .zone-public-links .btn { width: 100%; }
+
+/* ============ نافذة منبثقة (dialog) ============ */
+dialog.modal {
+  /*
+   * الريست في أعلى الملف (* { margin: 0 }) يلغي margin: auto التي تعتمد
+   * عليها المتصفحات لتوسيط النافذة، فتلتصق بحافة الشاشة — نعيدها صراحة.
+   */
+  inset: 0; margin: auto;
+  border: 0; padding: 0; color: inherit;
+  border-radius: var(--radius-lg); background: var(--white);
+  width: min(640px, 92vw); max-height: 88vh; overflow: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .3);
+}
+dialog.modal::backdrop { background: rgba(11, 42, 23, .55); }
+.modal-head {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem 1.3rem; background: var(--sand); border-bottom: 1px solid var(--line);
+}
+.modal-title { color: var(--green-heading); font-size: 1rem; margin: 0; }
+.modal-close {
+  flex-shrink: 0; width: 30px; height: 30px; line-height: 1;
+  background: transparent; border: 1px solid var(--line); border-radius: 999px;
+  font: inherit; font-size: .85rem; color: var(--muted); cursor: pointer; transition: .2s;
+}
+.modal-close:hover { background: #fdecea; color: var(--danger); border-color: #f0c8c4; }
+.modal-body { padding: 1.3rem; }
+.modal-actions { display: flex; gap: .6rem; align-items: center; flex-wrap: wrap; margin-top: .3rem; }
 
 /* ============ كود دعوة الحفل في شاشة الضيوف ============ */
 .invite-qr { display: flex; gap: 1.6rem; align-items: flex-start; flex-wrap: wrap; }

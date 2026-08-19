@@ -77,7 +77,8 @@
               <div class="field full"><label>الوصف</label><textarea name="description" rows="2">{{ $interest->description }}</textarea></div>
               <div class="field"><label>الترتيب</label><input type="number" name="sort" value="{{ $interest->sort }}" min="0" max="999"></div>
               <div class="field">
-                <label class="switch" style="margin-top:1.6rem">
+                <label>الحالة</label>
+                <label class="switch switch-box">
                   <input type="checkbox" name="active" value="1" @checked($interest->active)> مفعّل
                 </label>
               </div>
