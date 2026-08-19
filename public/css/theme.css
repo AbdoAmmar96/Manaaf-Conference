@@ -229,11 +229,24 @@ body.drawer-open { overflow: hidden; }
   background: var(--green-footer); color: var(--white);
   position: sticky; top: 0; z-index: 60;
 }
-.admin-topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 1.1rem; padding-block: .7rem; }
+.admin-topbar .container {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: .5rem 1.1rem; padding-block: .7rem; flex-wrap: wrap;
+}
 .admin-topbar .logo img { height: 46px; }
 .admin-topbar .logo-tag { color: rgba(255,255,255,.72); border-color: rgba(255,255,255,.28); }
-.admin-nav { display: flex; gap: .3rem; flex: 1; min-width: 0; justify-content: center; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
-.admin-nav::-webkit-scrollbar { display: none; }
+/*
+ * القائمة على سطر كامل تحت الشعار وتلتف عند الحاجة. قبل ذلك كانت
+ * flex-wrap: nowrap مع overflow-x: auto وشريط تمرير مخفي، فكانت العناصر
+ * الأولى (الضيوف وتسجيل الضيوف) تُقصّ خارج الشاشة بلا أي مؤشر عليها.
+ */
+.admin-nav {
+  order: 3; flex: 0 0 100%; width: 100%;
+  display: flex; flex-wrap: wrap; gap: .3rem;
+  justify-content: flex-start;
+  margin-top: .15rem; padding-top: .55rem;
+  border-top: 1px solid rgba(255,255,255,.14);
+}
 .admin-nav a { white-space: nowrap; }
 .admin-nav a {
   font-size: .85rem; font-weight: 600; color: rgba(255,255,255,.85);
@@ -299,8 +312,7 @@ table.data tr:hover td { background: #fbfaf6; }
   .logo img { height: 44px; }
   .admin-topbar .logo img { height: 40px; }
   .admin-topbar .logo-tag { display: none; }
-  .admin-nav { justify-content: flex-start; }
-  .admin-nav a { padding: .5rem .8rem; font-size: .82rem; }
+  .admin-nav a { padding: .42rem .75rem; font-size: .8rem; }
   .admin-user { gap: .55rem; }
   .admin-user .role-chip { padding: .12rem .55rem; }
 }
@@ -383,6 +395,8 @@ details.add-box .box-body { padding: 1.3rem; }
 }
 @media (max-width: 900px) {
   .invest-grid, .contact-grid { grid-template-columns: 1fr; }
+  /* على الجوال يظهر كود المسح قبل نموذج «قدّم طلبك الآن» */
+  .invest-grid .side-card { order: -1; }
 }
 
 .invest-form .eyebrow {
@@ -595,7 +609,9 @@ table.perms .perm-col { text-align: center; width: 6.5rem; }
 .mini-btn.danger:hover { background: #fdecea; }
 
 /* ============ صفحة المناطق العامة ============ */
-.zone-public-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.4rem; }
+.zone-public-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem; }
+@media (max-width: 1080px) { .zone-public-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 700px)  { .zone-public-grid { grid-template-columns: 1fr; } }
 .zone-public-card {
   background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg);
   box-shadow: var(--shadow); padding: 1.5rem 1.3rem; text-align: center;

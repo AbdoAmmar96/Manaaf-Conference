@@ -103,13 +103,6 @@
             </li>
           @endif
 
-          @if($contact['hours'])
-            <li>
-              <span class="ico" aria-hidden="true">🕒</span>
-              <div><b>ساعات العمل</b><span>{{ $contact['hours'] }}</span></div>
-            </li>
-          @endif
-
         </ul>
 
         <div class="aside-cta">

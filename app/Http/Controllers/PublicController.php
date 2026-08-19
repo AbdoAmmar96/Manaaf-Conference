@@ -196,7 +196,6 @@ class PublicController extends Controller
                 'whatsapp' => Setting::get('contact_whatsapp'),
                 'email' => Setting::get('contact_email'),
                 'website' => Setting::get('contact_website'),
-                'hours' => Setting::get('contact_hours'),
                 'map' => Setting::get('contact_map_url'),
             ],
         ]);

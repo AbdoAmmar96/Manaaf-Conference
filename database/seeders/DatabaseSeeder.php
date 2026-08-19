@@ -46,7 +46,6 @@ class DatabaseSeeder extends Seeder
         Setting::set('contact_phone', '');
         Setting::set('contact_whatsapp', '');
         Setting::set('contact_email', '');
-        Setting::set('contact_hours', 'الأحد – الخميس · ٩:٠٠ صباحًا – ٥:٠٠ مساءً');
         Setting::set('contact_map_url', '');
 
         // ── مجالات الاهتمام ──────────────────────────────────────────────
