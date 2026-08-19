@@ -7,7 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('css/theme.css') }}">
+{{-- بصمة وقت التعديل تُبطل كاش المتصفح و CDN عند كل تغيير في التنسيق --}}
+<link rel="stylesheet" href="{{ asset('css/theme.css') }}?v={{ @filemtime(public_path('css/theme.css')) ?: 1 }}">
 <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('brand/favicon-32.png') }}">
 <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('brand/icon-192.png') }}">
